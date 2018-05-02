@@ -1,5 +1,4 @@
 import random
-import copy
 
 
 def get_training_data():
@@ -23,6 +22,9 @@ def get_training_data():
         line = line.rstrip('\n')
         training_data_set.append(line.split())
 
+    for index_1 in range(len(input_training_data)):
+        for index_2 in range(len(input_training_data[0])):
+            input_training_data[index_1][index_2] = int(input_training_data[index_1][index_2])
     #Output the training data
     print("Training Data List:")
     for each in training_data_set:
