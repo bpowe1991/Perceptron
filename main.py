@@ -14,6 +14,7 @@ def get_training_data():
             input_training_data = open(training_data, 'r')
         except OSError:
             print('\nError accessing file. Enter the correct filename with extension.\n\n')
+            training_data = None
 
     input_training_data.__next__()
 
@@ -78,7 +79,7 @@ def train_perceptron(training_set, weights, learning_rate, iterations):
     error_rate = error_counter = 0
     
     #Training loop for perceptron
-    print("Training Perceptron . . .")
+    print("Training Perceptron . . .\n")
     for iteration in range(iterations):
         error = 0
         
@@ -91,7 +92,7 @@ def train_perceptron(training_set, weights, learning_rate, iterations):
             weights = adjust_weights(row, weights, output, learning_rate)
         error_rate = error/len(training_set)
         print("Training Iteration -", iteration+1)
-        print("Error Rate:", error_rate)
+        print("Error Rate:", error_rate, "\n")
 
         #If the error rate reaches 0 continously, break when count reaches 10
         if error_rate == 0.0:
@@ -117,6 +118,7 @@ def get_testing_data():
             input_testing_data = open(testing_data, 'r')
         except OSError:
             print('\nError accessing file. Enter the correct filename with extension.\n\n')
+            testing_data = None
 
     input_testing_data.__next__()
 
@@ -143,18 +145,13 @@ def get_testing_data():
 
 #Function to classify testing data
 def classify_data(test_data, weights):
-    error = 0
-    
+
     #Looping over all test data and classifying
     for row in test_data:
         row_sum = sum_inputs(row, weights)
         output = determine_output(row_sum)
-        if output != row[-1]:
-            error += 1
         print("Current Row:", row)
-        print("Predicted Class:", output)
-    error_rate = error/len(test_data)
-    print("Error Rate:", error_rate)
+        print("Predicted Class:", output, "\n")
 
 learning_rate = 0.1
 iterations = 500
@@ -165,15 +162,17 @@ weights = []
 #Start of training Perceptron
 print("::Train Perceptron::")
 print("Learning Rate:", learning_rate)
-print("Number of iterations:", iterations)
+print("Number of iterations:", iterations, "\n\n")
 training_set = get_training_data()
 weights = set_intial_weights(len(training_set[0])-1)
 weights = train_perceptron(training_set, weights, learning_rate, iterations)
+print("\n\nClassifying Data . . .")
 classify_data(training_set, weights)
 
 #Start of classifying testing data
 print("\n\n::Test Perceptron::")
 print("Learning Rate:", learning_rate)
-print("Number of iterations:", iterations)
+print("Number of iterations:", iterations, "\n\n")
 testing_set = get_testing_data()
+print("\n\nClassifying Data . . .\n")
 classify_data(testing_set, weights)
