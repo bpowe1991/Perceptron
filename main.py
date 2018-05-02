@@ -1,3 +1,18 @@
+""""
+Programmer: Briton A. Powe          Program Homework Assignment #5
+Date: 5/2/18                       Class: Introduction to A.I.
+Version: 1.3.1
+File: main.py
+------------------------------------------------------------------------
+Program Description:
+Program to construct a perceptron on training data and classify on testing data.
+***This program uses Python 3.6.4***
+
+References:
+Example 1 to illustrate process - https://blog.dbrgn.ch/2013/3/26/perceptrons-in-python/
+Example 2 to illustrate process - https://machinelearningmastery.com/implement-perceptron-algorithm-scratch-python/
+"""
+
 import random
 
 #Function to get training data
