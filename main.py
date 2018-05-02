@@ -20,7 +20,7 @@ def get_training_data():
     #Creating input sample list and parsing
     for line in input_training_data:
         line = line.rstrip('\n')
-        training_data_set.append(line.split())
+        training_data_set.append(line.split(" "))
 
     #Change all values to integers
     for index_1 in range(len(input_training_data)):
@@ -116,7 +116,7 @@ def get_testing_data():
     #Creating input sample list and parsing
     for line in input_testing_data:
         line = line.rstrip('\n')
-        testing_data_set.append(line.split())
+        testing_data_set.append(line.split(" "))
 
     #Change all values to integers
     for index_1 in range(len(input_testing_data)):
@@ -124,7 +124,7 @@ def get_testing_data():
             input_testing_data[index_1][index_2] = int(input_testing_data[index_1][index_2])
     
     #Output the training data
-    print("Training Data List:")
+    print("Testing Data List:")
     for each in testing_data_set:
         print(each)
     print("\n")
