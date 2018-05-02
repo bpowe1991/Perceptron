@@ -1,0 +1,96 @@
+import random
+import copy
+
+
+def get_training_data():
+    training_data_set = []
+    training_data = None
+
+    #Loop to get input file
+    while training_data is None:
+        try:
+            training_data = input("Please enter the name of the training data file: ")
+            
+            #Opening input file called input.txt
+            input_training_data = open(training_data, 'r')
+        except OSError:
+            print('\nError accessing file. Enter the correct filename with extension.\n\n')
+
+    input_training_data.__next__()
+
+    #Creating input sample list and parsing
+    for line in input_training_data:
+        line = line.rstrip('\n')
+        training_data_set.append(line.split())
+
+    #Output the training data
+    print("Training Data List:")
+    for each in training_data_set:
+        print(each)
+    print("\n")
+
+    #Close training data file
+    input_training_data.close()
+
+    return training_data_set
+
+def set_intial_weights(num_variables):
+    weights = []
+
+    #Generating random weights between 0 and 1
+    for _ in range(num_variables):
+        weights.append(random.uniform(0,1))
+    
+    return weights
+
+def adjust_weights(row, weights, actual_output, learning_rate):
+    for index in range(len(row)-1):
+        weights[index] = weights[index]+(learning_rate*(row[-1]-actual_output))*row[index]
+    
+    return weights
+
+def sum_inputs(row, weights):
+    total_sum = 0.0
+
+    for index in range(len(row)-1):
+        total_sum += row[index]*weights[index]
+    
+    return total_sum
+
+def determine_output(variable_sum):
+    if variable_sum > 0:
+        return 1
+    else:
+        return -1
+
+def train_perceptron(training_set, weights, learning_rate, iterations):
+    
+    error_rate = error_counter = 0
+    
+    #Training loop for perceptron
+    print("Training Perceptron . . .")
+    for iteration in range(iterations):
+        error = 0
+        
+        #Training on each row
+        for row in training_set:
+            row_sum = sum_inputs(row, weights)
+            output = determine_output(row_sum)
+            if output != row[-1]:
+                error += 1
+            weights = adjust_weights(row, weights, output, learning_rate)
+        error_rate = error/len(training_set)
+        print("Training Iteration -", iteration)
+        print("Error Rate:", error_rate)
+
+        #If the error rate reaches 0 continously, break when count reaches 10
+        if error_rate == 0.0:
+            error_counter += 1
+            if error_counter == 10:
+                break
+        else:
+            error_counter = 0.0
+
+    return weights
+
+
