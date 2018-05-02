@@ -97,4 +97,53 @@ def train_perceptron(training_set, weights, learning_rate, iterations):
 
     return weights
 
+def get_testing_data():
+    testing_data_set = []
+    testing_data = None
+
+    #Loop to get input file
+    while testing_data is None:
+        try:
+            testing_data = input("Please enter the name of the training data file: ")
+            
+            #Opening input file called input.txt
+            input_testing_data = open(testing_data, 'r')
+        except OSError:
+            print('\nError accessing file. Enter the correct filename with extension.\n\n')
+
+    input_testing_data.__next__()
+
+    #Creating input sample list and parsing
+    for line in input_testing_data:
+        line = line.rstrip('\n')
+        testing_data_set.append(line.split())
+
+    #Change all values to integers
+    for index_1 in range(len(input_testing_data)):
+        for index_2 in range(len(input_testing_data[0])):
+            input_testing_data[index_1][index_2] = int(input_testing_data[index_1][index_2])
+    
+    #Output the training data
+    print("Training Data List:")
+    for each in testing_data_set:
+        print(each)
+    print("\n")
+
+    #Close training data file
+    input_testing_data.close()
+
+    return testing_data_set
+
+def classify_data(test_data, weights):
+    error = 0
+
+    for row in test_data:
+        row_sum = sum_inputs(row, weights)
+        output = determine_output(row_sum)
+        if output != row[-1]:
+            error += 1
+        print("Current Row:", row)
+        print("Predicted Class:", output)
+    error_rate = error/len(test_data)
+    print("Error Rate:", error_rate)
 
